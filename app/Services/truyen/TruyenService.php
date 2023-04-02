@@ -69,4 +69,58 @@ class TruyenService {
         }
         return $value;
     }
+
+    public function add($request) {
+        try {
+            $time = date("Y-m-d", time());
+            truyen::create([
+                'ten_truyen' => $request->ten_truyen,
+                'thumb' => $request->thumb,
+                'tac_gia' => $request->tac_gia,
+                'mota_ngan' => $request->mota_ngan,
+                'ngay_dang' => $time
+            ]);
+            Session::flash('success', 'Thêm truyện thành công');
+        } catch (\Exception $e) {
+            Session::flash('error', 'Thêm thất bại');
+            Log::info($e->getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    public function truyens() {
+        return truyen::orderBy('id', 'asc')->get();
+    }
+
+    public function truyen($id) {
+        return truyen::orderBy('id', 'asc')->where('id', $id)->get();
+    }
+
+    public function edit($request, $id) {
+        try {
+            $time = date("Y-m-d", time());
+            truyen::create([
+                'ten_truyen' => $request->ten_truyen,
+                'thumb' => $request->thumb,
+                'tac_gia' => $request->tac_gia,
+                'mota_ngan' => $request->mota_ngan,
+                'ngay_dang' => $time
+            ]);
+            Session::flash('success', 'Thêm truyện thành công');
+        } catch (\Exception $e) {
+            Session::flash('error', 'Thêm thất bại');
+            Log::info($e->getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    public function delete($id) {
+        $value = truyen::where('id', $id)->first();
+        if ($value) {
+            return truyen::where('id', $id)->delete();
+        }
+        return false;
+    }
 }

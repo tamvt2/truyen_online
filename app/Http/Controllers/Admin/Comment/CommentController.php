@@ -1,73 +1,77 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Truyen;
+namespace App\Http\Controllers\Admin\Comment;
 
 use App\Http\Controllers\Controller;
-use App\Models\truyen;
+use App\Models\Comment;
+use App\Services\comment\CommentService;
 use App\Services\truyen\TruyenService;
-use App\Services\type\TypeService;
+use App\Services\user\UserService;
 use Illuminate\Http\Request;
 
-class TruyenController extends Controller
+class CommentController extends Controller
 {
-    protected $truyen, $type;
+    protected $truyen, $comment, $user;
 
-    public function __construct(TruyenService $truyen, TypeService $type) {
+    public function __construct(TruyenService $truyen, CommentService $comment, UserService $user) {
         $this->truyen = $truyen;
-        $this->type = $type;
+        $this->comment = $comment;
+        $this->user = $user;
     }
 
     public function create() {
-        return view('admin.truyen.add', [
-            'title' => 'Thêm truyện',
-            'types' => $this->type->getAll()
+        return view('admin.comment.add', [
+            'title' => 'Thêm bình luận',
+            'truyens' => $this->truyen->getAll(),
+            'users' => $this->user->getUsers()
         ]);
     }
 
     public function store(Request $request) {
-        $this->truyen->insert($request);
+        $this->comment->insert($request);
         return redirect()->back(); 
     }
 
     public function index() {
-        return view('admin.truyen.list', [
-            'title' => 'Danh sách truyện',
-            'values' => $this->truyen->getAll()
+        return view('admin.comment.list', [
+            'title' => 'Danh sách bình luận',
+            'values' => $this->comment->getAll()
         ]);
     }
 
-    public function show(truyen $id) {
-        return view('admin.truyen.edit', [
-            'title' => 'Chỉnh sửa truyện: '.$id->id,
+    public function show(Comment $id) {
+        return view('admin.comment.edit', [
+            'title' => 'Chỉnh sửa bình luận: ',
             'value' => $id,
-            'types' => $this->type->getAll()
+            'truyens' => $this->truyen->getAll(),
+            'users' => $this->user->getUsers()
         ]);
     }
 
-    public function update(Request $request, truyen $id) {
-        $result = $this->truyen->update($request, $id);
+    public function update(Request $request, Comment $id) {
+        $result = $this->comment->update($request, $id);
         if ($result) {
-            return redirect('/admin/truyen/list');
+            return redirect('/admin/comment/list');
         }
         return redirect()->back();
     }
 
     public function destroy(Request $request) {
-        $result = $this->truyen->destroy($request);
+        $result = $this->comment->destroy($request);
         if ($result) {
             return response()->json([
                 'error' => false,
-                'message' => 'Xóa thành công truyện'
+                'message' => 'Xóa thành công bình luận'
             ]);
         }
         return response()->json([
             'error' => true,
-            'message' => 'Xóa truyện thất bại'
+            'message' => 'Xóa bình luận thất bại'
         ]);
     }
 
     public function add(Request $request) {
-        $result = $this->truyen->add($request);
+        $result = $this->comment->add($request);
         if ($result) {
             return response()->json([
                 'error' => false,
@@ -80,16 +84,12 @@ class TruyenController extends Controller
         ]);
     }
 
-    public function truyens() {
-        return response()->json($this->truyen->truyens());
+    public function comment($id) {
+        return response()->json($this->comment->comment($id));
     }
 
-    public function truyen($id) {
-        return response()->json($this->truyen->truyen($id));
-    }
-
-    public function edit(Request $request, truyen $id) {
-        $result = $this->truyen->edit($request, $id);
+    public function edit(Request $request, Comment $id) {
+        $result = $this->comment->edit($request, $id);
         if ($result) {
             return response()->json([
                 'error' => false,
@@ -103,7 +103,7 @@ class TruyenController extends Controller
     }
 
     public function delete($id) {
-        $result = $this->truyen->delete($id);
+        $result = $this->comment->delete($id);
         if ($result) {
             return response()->json([
                 'error' => false,

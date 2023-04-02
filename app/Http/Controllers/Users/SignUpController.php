@@ -19,7 +19,26 @@ class SignUpController extends Controller
 
     public function register(RegisterRequest $request) {
         $user = User::create($request->validated());
+        if ($user) {
+            return redirect('login')->with('success', "Account successfully registered.");
+        } else {
+            return redirect('register')->with('error', "Account error registered");
+        }
+    }
 
-        return redirect('login')->with('success', "Account successfully registered.");
+    public function signup(Request $request) {
+        $userCreate = User::create([
+            'name' => $request->name,
+            'fullname' => $request->fullname,
+            'email' => $request->email,
+            'password' => $request->password
+        ]);
+
+        if ($userCreate) {
+            return response()->json(true, 201);
+        } else {
+            return response()->json(false);
+        }
+        
     }
 }

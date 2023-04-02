@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Chuong\ChuongController;
+use App\Http\Controllers\Admin\Comment\CommentController;
 use App\Http\Controllers\Admin\Photo\PhotoController;
 use App\Http\Controllers\Admin\Truyen\TruyenController;
 use App\Http\Controllers\Admin\Type\TypeController;
@@ -25,7 +26,6 @@ Route::get('login', [LoginController::class, 'index'])->name('login');
 Route::post('login', [LoginController::class, 'store']);
 Route::get('register', [SignUpController::class, 'index'])->name('register');
 Route::post('register', [SignUpController::class, 'register']);
-
 
 Route::middleware(['auth'])->group(function() {
     Route::prefix('admin')->group(function() {
@@ -74,6 +74,16 @@ Route::middleware(['auth'])->group(function() {
             Route::get('edit/{id}', [PhotoController::class, 'show']);
             Route::post('edit/{id}', [PhotoController::class, 'update']);
             Route::DELETE('destroy', [PhotoController::class, 'destroy']);
+            Route::get('logout', [LogoutController::class, 'logout'])->name('logout');
+        });
+
+        Route::prefix('comment')->group(function() {
+            Route::get('add', [CommentController::class, 'create']);
+            Route::post('add', [CommentController::class, 'store']);
+            Route::get('list', [CommentController::class, 'index']);
+            Route::get('edit/{id}', [CommentController::class, 'show']);
+            Route::post('edit/{id}', [CommentController::class, 'update']);
+            Route::DELETE('destroy', [CommentController::class, 'destroy']);
             Route::get('logout', [LogoutController::class, 'logout'])->name('logout');
         });
     });

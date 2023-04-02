@@ -87,7 +87,7 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-images"></i>
+                        <i class="nav-icon far fa-list-alt"></i>
                         <p>
                             Chương
                             <i class="right fas fa-angle-left"></i>
@@ -128,6 +128,30 @@
                             <a href="/admin/photo/list" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Danh Sách Hình ảnh</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon far fa-comment-alt"></i>
+                        <p>
+                            Bình luận
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/comment/add" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Thêm Bình luận</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/comment/list" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Danh Sách Bình luận</p>
                             </a>
                         </li>
                     </ul>

@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <form action="" method="POST">
+    <form action="" method="post">
         <div class="card-body">
             <div class="form-group">
                 <label>Tên truyện</label>
@@ -18,22 +18,24 @@
                 </select>
             </div>
             <div class="form-group">
-                <label>Chương số</label>
-                <input type="text" name="chuong_so" class="form-control" placeholder="Nhập vào chương" value="{{ $value->chuong_so }}">
-            </div>
-            <div class="form-group">
-                <label>Tên chương</label>
-                <input type="text" name="ten_chuong" class="form-control" placeholder="Nhập vào tên chương của truyện" value="{{ $value->ten_chuong }}">
+                <label>Người dùng</label>
+                <select name="user_id" class="form-control">
+                    <option value="0" {{ $value->user_id == 0 ? 'selected' : '' }}>Chọn user</option>
+                    @foreach($users as $key => $user)
+                        <option value="{{ $user->id }}" {{ $value->user_id == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label>Nội dung</label>
-                <textarea name="noi_dung" id="noi_dung" class="form-control">{{ $value->noi_dung }}</textarea>
+                <input type="text" name="noi_dung" class="form-control" placeholder="Nội dung" value="{{ $value->noi_dung }}"/>
             </div>
         </div>
+        
         <!-- /.card-body -->
 
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Chỉnh Sửa</button>
+            <button type="submit" class="btn btn-primary">Lưu</button>
         </div>
         @csrf
     </form>
