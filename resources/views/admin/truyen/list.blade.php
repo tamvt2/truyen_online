@@ -18,7 +18,7 @@
             @foreach($values as $key => $value)
                 <tr>
                     <td>{{ $value->id }}</td>
-                    <td>{!! App\Services\type\TypeService::getTL($value->the_loai_id) !!}</td>
+                    <td>{{ $value->ten_loai }}</td>
                     <td>{{ $value->ten_truyen }}</td>
                     <td>
                         <a href="{{ $value->thumb }}" target="_blank">

@@ -25,7 +25,10 @@ class CommentService {
     }
 
     public function getAll() {
-        return comment::orderBy('id', 'asc')->paginate(15);
+        return comment::join('truyens', 'comments.truyen_id', '=', 'truyens.id')
+        ->join('users', 'comments.user_id', '=', 'users.id')
+        ->select('comments.*', 'truyens.ten_truyen', 'users.name')
+        ->orderBy('id', 'asc')->paginate(15);
     }
 
     public function update($request, $id) {

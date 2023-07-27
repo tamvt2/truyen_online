@@ -19,6 +19,8 @@ function removeRow(id, url) {
             }
         });
     }
+
+    
 }
 
 

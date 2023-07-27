@@ -15,8 +15,8 @@
             @foreach($values as $key => $value)
                 <tr>
                     <td>{{ $value->id }}</td>
-                    <td>{{ App\Services\truyen\TruyenService::getTT($value->truyen_id) }}</td>
-                    <td>{{ App\Services\user\UserService::getName($value->user_id) }}</td>
+                    <td>{{ $value->ten_truyen }}</td>
+                    <td>{{ $value->name }}</td>
                     <td>{{ $value->noi_dung }}</td>
                     <td>
                         <a class="btn btn-primary btn-sm" href="/admin/comment/edit/{{ $value->id }}">

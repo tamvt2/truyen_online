@@ -14,7 +14,7 @@
             @foreach($values as $key => $value)
                 <tr>
                     <td>{{ $value->id }}</td>
-                    <td>{{ App\Services\chuong\ChuongService::getName($value->chuong_id) }}</td>
+                    <td>{{ $value->chuong_so }}: {{ $value->ten_chuong }}</td>
                     <td>
                         <a href="{{ $value->thumb }}" target="_blank">
                             <img src="{{ $value->thumb }}" height="40px" width="50px">

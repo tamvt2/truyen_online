@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Comment\CommentController;
+use App\Http\Controllers\Admin\Truyen\TruyenController;
 use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Users\LoginController;
 use App\Http\Controllers\Users\SignUpController;

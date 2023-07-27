@@ -28,7 +28,8 @@ class TruyenService {
     }
 
     public function getAll() {
-        return truyen::orderBy('id', 'asc')->paginate(15);
+        return truyen::join('the_loais', 'truyens.the_loai_id', '=', 'the_loais.id')
+        ->select('truyens.*', 'the_loais.ten_loai')->orderBy('id', 'asc')->paginate(15);
     }
 
     public function update($request, $id) {
@@ -61,19 +62,11 @@ class TruyenService {
         return false;
     }
 
-    public static function getTT($id) {
-        $value = '';
-        $results = truyen::select('ten_truyen')->where('id', $id)->get();
-        foreach($results as $result) {
-            $value = $result->ten_truyen;
-        }
-        return $value;
-    }
-
     public function add($request) {
         try {
             $time = date("Y-m-d", time());
             truyen::create([
+                'the_loai_id' => $request->the_loai,
                 'ten_truyen' => $request->ten_truyen,
                 'thumb' => $request->thumb,
                 'tac_gia' => $request->tac_gia,
@@ -101,6 +94,7 @@ class TruyenService {
         try {
             $time = date("Y-m-d", time());
             truyen::create([
+                'the_loai_id' => $request->the_loai,
                 'ten_truyen' => $request->ten_truyen,
                 'thumb' => $request->thumb,
                 'tac_gia' => $request->tac_gia,

@@ -47,14 +47,4 @@ class TypeService {
         }
         return false;
     }
-
-    public static function getTL($id) {
-        $values = the_loai::select('ten_loai')->where('id', $id)->get();
-        $result = '';
-        foreach($values as $value) {
-            $result = $value->ten_loai;
-        }
-        return $result;
-    }
 }
-?>

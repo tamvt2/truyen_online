@@ -24,7 +24,9 @@ class ChuongService {
     }
 
     public function getAll() {
-        return chuong::orderBy('truyen_id', 'asc')->paginate(15);
+        return chuong::join('truyens', 'chuongs.truyen_id', '=', 'truyens.id')
+        ->select('chuongs.*', 'truyens.ten_truyen')->orderBy('truyen_id', 'asc')
+        ->paginate(15);
     }
 
     public function update($request, $id) {
@@ -52,13 +54,5 @@ class ChuongService {
             return chuong::where('id', $id)->delete();
         }
         return false;
-    }
-
-    public static function getName($id) {
-        $results = chuong::select('chuong_so', 'ten_chuong')->where('id', $id)->get();
-        foreach($results as $result) {
-            $value = $result->chuong_so.': '.$result->ten_chuong;
-        }
-        return $value;
     }
 }

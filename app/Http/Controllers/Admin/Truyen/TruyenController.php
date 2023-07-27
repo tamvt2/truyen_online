@@ -32,7 +32,7 @@ class TruyenController extends Controller
     public function index() {
         return view('admin.truyen.list', [
             'title' => 'Danh sách truyện',
-            'values' => $this->truyen->getAll()
+            'values' => $this->truyen->getAll(),
         ]);
     }
 

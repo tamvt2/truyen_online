@@ -37,15 +37,4 @@ class UserService {
         }
         return false;
     }
-
-    public static function getName($id) {
-        $value = '';
-        $results = user::select('name')->where('id', $id)->get();
-        foreach($results as $result) {
-            $value = $result->name;
-        }
-        return $value;
-    }
 }
-
-?>

@@ -22,7 +22,9 @@ class PhotoService {
     }
 
     public function getAll() {
-        return chuong_hinhanh::orderBy('id', 'asc')->paginate(15);
+        return chuong_hinhanh::join('chuongs', 'chuong_hinhanhs.chuong_id', '=', 'chuongs.id')
+        ->select('chuong_hinhanhs.*', 'chuongs.chuong_so', 'chuongs.ten_chuong')->orderBy('id', 'asc')
+        ->paginate(15);
     }
 
     public function update($request, $id) {
