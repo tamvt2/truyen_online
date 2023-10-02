@@ -1,0 +1,81 @@
+version: "3.7"
+
+services:
+    # image project
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+        depends_on:
+            - redis
+        networks:
+            - laravel
+
+    # nginx
+    nginx:
+        image: nginx:alpine
+        restart: unless-stopped
+        ports:
+            - "8989:80"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/:/etc/nginx/conf.d/
+            - "./public:/var/www/public:ro"
+            - "./storage/app:/var/www/storage/app:ro"
+        networks:
+            - laravel
+
+    # db mysql
+    db:
+        image: mysql:8.0
+        container_name: travellist-db
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: truyen_online
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_PASSWORD: root
+            MYSQL_USER: root
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        volumes:
+            - ./.docker/mysql/dbdata:/var/lib/mysql
+        ports:
+            - "3388:3306"
+        networks:
+            - laravel
+    # myadmin
+    phpmyadmin:
+        image: phpmyadmin
+        ports:
+            - "8081:80"
+        environment:
+            PMA_ARBITRARY: 1
+        networks:
+            - laravel
+
+    # queue
+    queue:
+        image: especializati/laravel9-app
+        restart: unless-stopped
+        command: "php artisan queue:work"
+        volumes:
+            - ./:/var/www
+        depends_on:
+            - redis
+            - app
+        networks:
+            - laravel
+
+    # redis
+    redis:
+        image: redis:latest
+        networks:
+            - laravel
+
+networks:
+    laravel:
+        driver: bridge
